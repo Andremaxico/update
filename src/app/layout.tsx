@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { News } from "./components/News/News";
 import { Sidebar } from "./components/Sidebar/Sidebar";
+import { Search } from "./components/Search/Search";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,12 +30,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="container flex justify-between">
+        <div className="reelative container flex justify-between">
           <div className="">
             <Sidebar />
           </div>
           {children}
-          <div className="">
+          <div className="sticky right-0 top-0 pt-5">
+            <div className="mb-2">
+              <Search />
+            </div>
             <News />
           </div>
         </div>
