@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NewsRenderer } from './NewsRenderer';
 import { NewsType } from '@/app/types';
 
@@ -10,6 +10,7 @@ type PropsType = {
 
 export const NewsService: React.FC<PropsType> = ({news}) => {
     const [articlesCount, setArticlesCount] = useState<number>(3);
+    const [isEnd, setIsEnd] = useState<boolean>(false);
 
     const articles = news.articles.slice(0, articlesCount); 
 
@@ -17,13 +18,19 @@ export const NewsService: React.FC<PropsType> = ({news}) => {
         setArticlesCount((articlesCount) => articlesCount + 3);
     }
 
+    useEffect(() => {
+        if(articlesCount >= news.totalResults) {
+            setIsEnd(true);
+        }
+    }, [articlesCount])
+
     return (
-        <div className='flex flex-col items-center'>
+        <div className='flex flex-col items-center pb-2'>
             <div className="w-full">
                 <NewsRenderer articles={articles} />
             </div>
-            <button className='text-blue-400 ' onClick={handleClick}>
-                Load more
+            <button className='text-blue-400 cursor-pointer' onClick={handleClick} disabled={isEnd}>
+                {isEnd ? 'На цьому поки все' : 'Показати ще'}
             </button>
         </div>
     )

@@ -9,13 +9,13 @@ export const MiniArticle: React.FC<PropsType> = ({data}) => {
     const { author, content, description, publishedAt, title, urlToImage, url, source } = data;
 
     return (
-        <div className=''>
+        <div className='mb-2 last:mb-0 group'>
             <a href={url}>
-                <h6 className='mb-1 font-semibold'>{title}</h6>
+                <h6 className='mb-1 font-semibold group-hover:text-blue-600 duration-50'>{title}</h6>
             </a>
             <p className='mb-1 text-sm text-gray-400'>{source.name}</p>
-            <div className={'w-10 h-4 rounded-lg'}>
-                <img src={urlToImage} className='object-fit'/>
+            <div className={'w-15 h-8 rounded-lg overflow-hidden'}>
+                <img src={urlToImage} className='object-cover w-full h-full'/>
             </div>
         </div>
     )

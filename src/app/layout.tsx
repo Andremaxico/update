@@ -35,7 +35,7 @@ export default function RootLayout({
             <Sidebar />
           </div>
           {children}
-          <div className="sticky right-0 top-0 pt-5">
+          <div className="sticky right-0 top-0 pt-5 max-w-80">
             <div className="mb-2">
               <Search />
             </div>
