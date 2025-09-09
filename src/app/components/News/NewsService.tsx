@@ -25,7 +25,7 @@ export const NewsService: React.FC<PropsType> = ({news}) => {
     }, [articlesCount])
 
     return (
-        <div className='flex flex-col items-center pb-2'>
+        <div className='flex flex-col items-center'>
             <div className="w-full">
                 <NewsRenderer articles={articles} />
             </div>

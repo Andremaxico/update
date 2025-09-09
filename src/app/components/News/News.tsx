@@ -12,7 +12,7 @@ export const News: React.FC<PropsType> = async ({}) => {
     const news = response.data.data;
 
     return (
-        <div>
+        <div className='p-2 rounded-md bg-gray-100'>
             <h4 className='mb-2 text-lg font-bold'>Whats happening</h4>
             {news ?
                 <NewsService news={news} />
@@ -20,8 +20,6 @@ export const News: React.FC<PropsType> = async ({}) => {
                 // TODO: style it
                 <p>{response.data.message}</p>
             }
-            
-
         </div>
     )
 }
