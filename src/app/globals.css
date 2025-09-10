@@ -1,5 +1,28 @@
 @import "tailwindcss";
 
+.button-blue {
+  font-color: white;
+  background-color: var(--color-blue-400);
+  font-weight: 600;
+  font-size: var(--text-lg) /* 1.125rem = 18px */;
+  line-height: var(--tw-leading, var(--text-lg--line-height) /* calc(1.75 / 1.125) ≈ 1.5556 */);
+  padding: calc(var(--spacing) * 2)  calc(var(--spacing) * 10);
+  border-radius: calc(infinity * 1px);
+  cursor: pointer;
+  transition-duration: 100ms;
+}
+
+.button-blue:hover {
+  @media (hover: hover) {
+      --tw-brightness: brightness(90%);
+      filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+  }
+}
+@property --tw-blur {
+    syntax: "*";
+    inherits: false;
+}
+
 .container {
   max-width: 1180px;
   margin: 0 auto;

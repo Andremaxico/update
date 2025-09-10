@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link';
 import React from 'react'
 import { FaXTwitter } from "react-icons/fa6";
@@ -17,9 +19,13 @@ export const Sidebar: React.FC<PropsType> = ({}) => {
                 </div>
                 <span className='hidden md:inline-block text-lg font-bold'>Home</span>
             </Link>
-            <button className='text-white bg-blue-400 font-semibold text-lg py-2 px-10 rounded-full cursor-pointer hover:brightness-90 duration-100'>
-                Увійти
-            </button>
+            <Link href={'/signin'}>
+                <button 
+                    className='text-white bg-blue-400 font-semibold text-lg py-2 px-10 rounded-full cursor-pointer hover:brightness-90 duration-100'
+                >
+                    Увійти
+                </button>
+            </Link>
         </aside>
     )
 }

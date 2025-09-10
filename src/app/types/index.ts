@@ -24,3 +24,4 @@ export type BasicResponse<T> = {
     data: T | null,
     error: null | string,
 }
+
