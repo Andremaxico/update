@@ -4,9 +4,11 @@ import React, { useState } from 'react'
 import { IoEyeOutline } from "react-icons/io5";
 import { IoEyeOffOutline } from "react-icons/io5";
 
-type PropsType = {};
+type PropsType = {
+    formAction: (data: FormData) => void,
+};
 
-export const SignInForm: React.FC<PropsType> = ({}) => {
+export const SignInForm: React.FC<PropsType> = ({formAction}) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
     const togglePasswordVisibility = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -19,6 +21,7 @@ export const SignInForm: React.FC<PropsType> = ({}) => {
             <label className='mb-3 w-full cursor-pointer'>
                 <p className='mb-1 text-sm italic'>Введіть Вашу електронну адресу</p>
                 <input 
+                    name='email'
                     type='email'
                     required
                     placeholder='Електронна адреса'
@@ -44,6 +47,7 @@ export const SignInForm: React.FC<PropsType> = ({}) => {
                     <input 
                         // TODO:
                         //ad validation
+                        name='password'
                         type={isPasswordVisible ? 'text' : 'password'}
                         placeholder='Пароль'
                         required
@@ -74,7 +78,10 @@ export const SignInForm: React.FC<PropsType> = ({}) => {
                 </div>
             </label>
 
-            <button className='text-white bg-blue-400 text-sm py-2 px-10 rounded-full cursor-pointer hover:brightness-90 duration-100'>
+            <button 
+                formAction={formAction}
+                className='text-white bg-blue-400 text-sm py-2 px-10 rounded-full cursor-pointer translate-x-4 hover:brightness-90 duration-100'
+            >
                 Увійти
             </button>
         </form>

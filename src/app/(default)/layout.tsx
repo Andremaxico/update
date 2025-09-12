@@ -20,11 +20,19 @@ export const metadata: Metadata = {
   description: "X Clone created for educational purposes",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // const supabase = await createClient()
+  // const { data, error } = await supabase.auth.getUser()
+  // if (error || !data?.user) {
+  //   redirect('/login')
+  // }
+
+  // console.log('user', data)
+
   return (
     <html lang="en">
       <body
