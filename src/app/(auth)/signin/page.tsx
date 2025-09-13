@@ -13,7 +13,7 @@ export default async function page() {
             <div className="flex flex-col items-center p-4 w-full max-w-sm bg-white rounded-lg shadow-lg">
                 <h2 className='mb-3 text-2xl font-bold'>Вхід</h2>
                 <div className="w-full mb-4">
-                    <SignInForm formAction={signin} />
+                    <SignInForm formAction={signin} type='signin' />
                 </div>
 
                 <div className="flex items-center text-sm mb-4">

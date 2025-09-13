@@ -6,9 +6,10 @@ import { IoEyeOffOutline } from "react-icons/io5";
 
 type PropsType = {
     formAction: (data: FormData) => void,
+    type: 'signin' | 'signup',
 };
 
-export const SignInForm: React.FC<PropsType> = ({formAction}) => {
+export const SignInForm: React.FC<PropsType> = ({formAction, type}) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
     const togglePasswordVisibility = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -34,8 +35,9 @@ export const SignInForm: React.FC<PropsType> = ({formAction}) => {
                         border-1 border-gray-200
                         hover:shadow:md
                         focus:border-black active:border-black active:border-2 focus-visible:outline-0
+                        invalid:border-red-500
                         duration-75
-                        outline-
+                        outline-0
                         cursor-pointer
                     '
                 />
@@ -46,11 +48,12 @@ export const SignInForm: React.FC<PropsType> = ({formAction}) => {
                 <div className="flex relative">
                     <input 
                         // TODO:
-                        //ad validation
+                        //add validation
                         name='password'
                         type={isPasswordVisible ? 'text' : 'password'}
                         placeholder='Пароль'
                         required
+                        pattern='/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/'
                         className='
                             w-full
                             py-2 px-4
@@ -60,6 +63,7 @@ export const SignInForm: React.FC<PropsType> = ({formAction}) => {
                             border-1 border-gray-200
                             hover:shadow:md
                             focus:border-black active:border-black active:border-2 focus-visible:outline-0
+                            invalid:border-red-500
                             duration-75
                             outline-
                             cursor-pointer
@@ -82,7 +86,7 @@ export const SignInForm: React.FC<PropsType> = ({formAction}) => {
                 formAction={formAction}
                 className='text-white bg-blue-400 text-sm py-2 px-10 rounded-full cursor-pointer translate-x-4 hover:brightness-90 duration-100'
             >
-                Увійти
+                {type === 'signin' ? 'Увійти' : 'Зареєструватися'}
             </button>
         </form>
     )
