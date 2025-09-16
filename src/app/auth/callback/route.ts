@@ -12,6 +12,8 @@ export async function GET(request: Request) {
     next = '/'
   }
 
+  console.log('callback work', next)
+
   if (code) {
     const supabase = await createClient()
     const { error } = await supabase.auth.exchangeCodeForSession(code)

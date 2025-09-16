@@ -41,7 +41,7 @@ export const SocialSignIn: React.FC<PropsType> = ({}) => {
             'provider': 'github',
             options: {
                 // TODO: change this to handle dev and prod mode
-                redirectTo: `http://localhost:3000/auth/callback`,
+                redirectTo: `https://oghkmzxchzuryswavhjk.supabase.co/auth/v1/callback`,
             },
         })
     }
