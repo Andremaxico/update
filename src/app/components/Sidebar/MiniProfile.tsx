@@ -13,7 +13,8 @@ export const MiniProfile: React.FC<PropsType> = async ({}) => {
 
     return (
         <div>
-            <LoginButton />
+            
+            
         </div>
     )
 }
