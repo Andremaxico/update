@@ -24,8 +24,8 @@ export const Sidebar: React.FC<PropsType> = async ({}) => {
             <div className="flex-1">
                 <Navigation />
             </div>
-            {data ? 
-                <MiniProfile />
+            {data.user ? 
+                <MiniProfile data={data} />
             :
                 <LoginButton />
             }
