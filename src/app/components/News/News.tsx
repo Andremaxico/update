@@ -1,15 +1,18 @@
 import { axiosInstance } from '@/app/utils/axiosInstance'
 import React from 'react'
 import { NewsService } from './NewsService';
+import axios from 'axios';
 
 type PropsType = {}
 
 export const News: React.FC<PropsType> = async ({}) => {
-    const response = await axiosInstance.get('/news');
+    const response = await fetch('http://localhost:3000/api/news');
 
-    console.log('response', response.data);
+    const data = await response.json();
 
-    const news = response.data.data;
+    console.log('response', data);
+
+    const news = data.data;
 
     return (
         <div className='p-2 rounded-md bg-gray-100'>
@@ -18,7 +21,7 @@ export const News: React.FC<PropsType> = async ({}) => {
                 <NewsService news={news} />
             : 
                 // TODO: style it
-                <p>{response.data.message}</p>
+                <p>error</p>
             }
         </div>
     )

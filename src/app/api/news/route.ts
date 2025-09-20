@@ -4,9 +4,12 @@ import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest): Promise<NextResponse<BasicResponse<NewsType>>> => {
+    console.log('get request to api news');
     const res = await axios.get('https://saurav.tech/NewsAPI/top-headlines/category/health/us.json');
 
     const newsData = res.data as NewsType;
+
+    console.log('news data', newsData, 'status', res.status)
 
     if(res.status < 300) {
         return NextResponse.json({data: newsData, error: null, message: "Success", status: res.status})

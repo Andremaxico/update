@@ -3,6 +3,7 @@ import { type NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
     console.log('middleware work')
+    console.log('middleware request', request)
 
   return await updateSession(request)
 }
