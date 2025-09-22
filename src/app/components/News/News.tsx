@@ -10,8 +10,6 @@ export const News: React.FC<PropsType> = async ({}) => {
 
     const data = await response.json();
 
-    console.log('response', data);
-
     const news = data.data;
 
     return (

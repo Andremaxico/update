@@ -1,11 +1,10 @@
 'use server'
 
-
-import { SignInForm } from '@/app/components/SignIn/SignInForm'
-import { SocialSignIn } from '@/app/components/SignIn/SocialSignIn'
 import Link from 'next/link'
 import React from 'react'
 import { signin } from './actions'
+import { SocialAuth } from '@/app/components/SignIn/SocialAuth'
+import { AuthForm } from '@/app/components/SignIn/AuthForm'
 
 export default async function page() {
     return (
@@ -13,7 +12,7 @@ export default async function page() {
             <div className="flex flex-col items-center p-4 w-full max-w-sm bg-white rounded-lg shadow-lg">
                 <h2 className='mb-3 text-2xl font-bold'>Вхід</h2>
                 <div className="w-full mb-4">
-                    <SignInForm formAction={signin} type='signin' />
+                    <AuthForm formAction={signin} type='signin' />
                 </div>
 
                 <div className="flex items-center text-sm mb-4">
@@ -25,7 +24,7 @@ export default async function page() {
                     </Link>
                 </div>
 
-                <SocialSignIn />
+                <SocialAuth />
             </div>
         </div>
     )
