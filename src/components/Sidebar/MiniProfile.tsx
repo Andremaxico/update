@@ -1,4 +1,4 @@
-import { createClient } from '@/app/utils/supabase/server';
+import { createClient } from '@/utils/supabase/server';
 import React from 'react'
 import { LoginButton } from './LoginButton';
 import Image from 'next/image';

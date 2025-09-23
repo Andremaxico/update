@@ -1,4 +1,4 @@
-import { axiosInstance } from '@/app/utils/axiosInstance'
+import { axiosInstance } from '@/utils/axiosInstance'
 import React from 'react'
 import { NewsService } from './NewsService';
 import axios from 'axios';

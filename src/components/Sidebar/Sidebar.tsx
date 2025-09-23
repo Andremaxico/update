@@ -4,7 +4,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import { IoHome } from "react-icons/io5";
 import { MiniProfile } from './MiniProfile';
 import { Navigation } from './Navigation';
-import { createClient } from '@/app/utils/supabase/server';
+import { createClient } from '@/utils/supabase/server';
 import { LoginButton } from './LoginButton';
 
 type PropsType = {}

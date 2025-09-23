@@ -1,4 +1,4 @@
-import { ArticleType } from '@/app/types'
+import { ArticleType } from '@/types'
 import React from 'react'
 
 type PropsType = {

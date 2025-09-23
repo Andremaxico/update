@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { NewsRenderer } from './NewsRenderer';
-import { NewsType } from '@/app/types';
+import { NewsType } from '@/types';
 
 type PropsType = {
     news: NewsType,

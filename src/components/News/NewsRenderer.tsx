@@ -1,4 +1,4 @@
-import { ArticleType, NewsType } from '@/app/types'
+import { ArticleType, NewsType } from '@/types'
 import React from 'react'
 import { MiniArticle } from './MiniArticle'
 

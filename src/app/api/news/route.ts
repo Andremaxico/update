@@ -1,5 +1,5 @@
-import { BasicResponse, NewsType } from "@/app/types";
-import { axiosInstance } from "@/app/utils/axiosInstance";
+import { BasicResponse, NewsType } from "@/types";
+import { axiosInstance } from "@/utils/axiosInstance";
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
