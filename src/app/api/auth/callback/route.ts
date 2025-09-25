@@ -14,6 +14,8 @@ export async function GET(request: Request) {
     next = '/'
   }
 
+  console.log('code', code)
+
   if (code) {
     const supabase = await createClient()
     const { error } = await supabase.auth.exchangeCodeForSession(code)
@@ -35,5 +37,5 @@ export async function GET(request: Request) {
   }
 
   // return the user to an error page with instructions
-  return NextResponse.redirect(`${origin}/singi`)
+  return NextResponse.redirect(`${origin}/signin`)
 }

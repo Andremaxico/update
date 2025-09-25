@@ -1,7 +1,8 @@
+import { Home } from "@/components/Home/Home";
 import Image from "next/image";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <p>Home</p>
+    <Home />
   );
 }

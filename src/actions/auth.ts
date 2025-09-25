@@ -18,6 +18,9 @@ export const authWithOAuthAction = async (provider: Provider) => {
 
     console.log('redirect url', `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/callback`)
 
+    //TODO:
+    //fix github signin
+
     try {
         const { error, data } = await supabase.auth.signInWithOAuth({
             'provider': provider,

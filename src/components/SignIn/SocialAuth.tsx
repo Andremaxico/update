@@ -38,18 +38,21 @@ export const SocialAuth: React.FC<PropsType> = ({}) => {
                 <button 
                     className="w-12 h-12 flex items-center justify-center border-1 border-gray-300 rounded-md cursor-pointer group"
                     onClick={() => handleSocialAuth('github')}
+                    disabled={isPending}
                 >
                     <FaGithub className="size-5 hover:scale-120 duration-75" />
                 </button>
                 <button 
                     className="w-12 h-12 flex items-center justify-center border-1 border-gray-300 rounded-md cursor-pointer group"
                     onClick={() => handleSocialAuth('google')}
+                    disabled={isPending}
                 >
                     <FaGoogle className="size-5 hover:scale-120 duration-75" />
                 </button>
                 <button 
                     className="w-12 h-12 flex items-center justify-center border-1 border-gray-300 rounded-md cursor-pointer group"
                     onClick={() => handleSocialAuth('twitter')}
+                    disabled={isPending}
                 >
                     <BsTwitterX className="size-5 hover:scale-120 duration-75" />
                 </button>
