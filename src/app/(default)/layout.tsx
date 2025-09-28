@@ -39,11 +39,11 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <div className="reelative container flex justify-between">
-          <div className="">
+          <div className="hidden sm:block">
             <Sidebar />
           </div>
           {children}
-          <div className="sticky right-0 top-0 pt-5 max-w-80">
+          <div className="hidden md:block sticky right-0 top-0 pt-5 pl-2 border-l-1 border-gray-300 max-w-80">
             <div className="mb-2">
               <Search />
             </div>

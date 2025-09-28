@@ -1,3 +1,10 @@
+
+export type ResponseType<DataType> = {
+    data: DataType | null;
+    errorMessage: string | null,
+    status: number,
+}
+
 export type NewsType = {
     status: string, 
     totalResults: number,
