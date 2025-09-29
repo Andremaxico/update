@@ -8,8 +8,6 @@ type PropsType = {
 }
 
 export const AddPost: React.FC<PropsType> = async ({user}) => {
-    console.log('data', user)
-
     const { user_metadata } = user;
 
     return (
@@ -23,7 +21,7 @@ export const AddPost: React.FC<PropsType> = async ({user}) => {
                     height={40}
                 />
             </div>
-            <AddPostForm />
+            <AddPostForm user={user} />
         </div>
     )
 }
