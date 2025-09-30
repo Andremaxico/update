@@ -5,8 +5,6 @@ export const Home = async () => {
     const supabase = await createClient()
     const { data, error } = await supabase.auth.getUser()
 
-    console.log('supabase user', data.user)
-
     return (
         <div className="w-full max-w-2xl">
             <div className="p-2 border-b-1 border-gray-500">

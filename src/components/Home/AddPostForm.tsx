@@ -13,11 +13,9 @@ type PropsType = {
 
 export const AddPostForm: React.FC<PropsType> = ({user}) => {
     const [isPending, startTransition] = useTransition();
-    const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [text, setText] = useState<string | undefined>(undefined);
     const [selectedImageUrl, setSelectedImageUrl] = useState<string |  null>(null);
-    
-    console.log('url', selectedImageUrl)
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -32,30 +30,36 @@ export const AddPostForm: React.FC<PropsType> = ({user}) => {
 
                     const { errorMessage } = await sendPostAction(data);
 
-                    setSelectedFile(undefined);
-                    setText(undefined);
+                    if(errorMessage) {
+                        throw new Error(errorMessage)
+                    }
+
+                    setSelectedImageUrl(null);
+                    setSelectedFile(null);
+                    setText('');
                 } catch(e) {
-                    console.log('something went wrong')
+                    console.log('something went wrong', e)
                 }
             })
         }
     }
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log('file input value', e.target.value);
-
         const files = e.target.files
 
         if(files && files[0]) {
-            console.log('file', files[0])
             setSelectedFile(files[0]);
-
             setSelectedImageUrl(URL.createObjectURL(files[0]))
         }
     }
 
     const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setText(e.target.value);
+    }
+
+    const deleteImage = () => {
+        setSelectedFile(null);
+        setSelectedImageUrl(null);
     }
 
     return (
@@ -82,13 +86,17 @@ export const AddPostForm: React.FC<PropsType> = ({user}) => {
                         alt="selected image"
                         className="w-full h-full object-cover"
                     />
-                    <button className="
-                        absolute top-2 right-2 
-                        w-8 h-8 flex items-center justify-center 
-                        text-white rounded-md bg-black opacity-80
-                        hover:opacity-100 duration-50
-                        cursor-pointer z-2
-                    ">
+                    <button 
+                        className="
+                            absolute top-2 right-2 
+                            w-8 h-8 flex items-center justify-center 
+                            text-white rounded-md bg-black opacity-80
+                            hover:opacity-100 duration-50
+                            cursor-pointer z-2
+                        "
+                        onClick={deleteImage}
+                        
+                    >
                         X
                     </button>
                 </div>

@@ -3,7 +3,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { ResponseType } from '@/types';
 import { createClient } from '@/utils/supabase/server';
 
-export const POST = async (req: NextRequest): Promise<NextResponse<ResponseType<any>>> => {
+type UrlDataType = {
+    publicUrl: string
+}
+
+export const POST = async (req: NextRequest): Promise<NextResponse<ResponseType<UrlDataType>>> => {
     const supabase = await createClient();
 
     const formData  = await req.formData();
@@ -11,14 +15,15 @@ export const POST = async (req: NextRequest): Promise<NextResponse<ResponseType<
 
     const fileId = uuidv4();
 
-    const { data, error } = await supabase.storage.from('posts').upload(`images/${fileId}`, file)
+    const { error } = await supabase.storage.from('posts').upload(`images/${fileId}`, file)
 
-    console.log('data', data);
+    const { data: urlData } = supabase.storage.from('posts').getPublicUrl(`images/${fileId}`);
 
     if (error) {
         return NextResponse.json({ data: null, status: 500, errorMessage: error.message })
     } else {
-        return NextResponse.json({ data, status: 200, errorMessage: null })
+        console.log('return response');
+        return NextResponse.json({ data: urlData, status: 200, errorMessage: null })
     }
 
 }
