@@ -1,4 +1,14 @@
 
+export type PostType = {
+    user_id: string,
+    id: string,
+    created_at: string,
+    username: string,
+    avatar_url: string,
+    image_url: string,
+    text: string
+}
+
 export type ResponseType<DataType> = {
     data: DataType | null;
     errorMessage: string | null,

@@ -1,5 +1,7 @@
 import { createClient } from "@/utils/supabase/server"
 import { AddPost } from "./AddPost"
+import { axiosInstance } from "@/utils/axiosInstance"
+import { Stream } from "./Stream"
 
 export const Home = async () => {
     const supabase = await createClient()
@@ -11,6 +13,9 @@ export const Home = async () => {
                 <h2 className="text-lg font-bold">Home</h2>
             </div>
             {data.user && <AddPost user={data.user} />}
+            <div>
+                <Stream />
+            </div>
         </div>
     )
 }

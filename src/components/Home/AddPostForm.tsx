@@ -27,7 +27,8 @@ export const AddPostForm: React.FC<PropsType> = ({user}) => {
                     data.append('avatarUrl', user.user_metadata.avatar_url)
                     data.append('username', user.user_metadata.name)
                     data.append('imageFile', selectedFile)
-
+                    data.append('userId', user.user_metadata.user_id)
+                    
                     const { errorMessage } = await sendPostAction(data);
 
                     if(errorMessage) {
@@ -114,12 +115,16 @@ export const AddPostForm: React.FC<PropsType> = ({user}) => {
                         <AiOutlinePicture className="size-5 text-blue-400" />
                     </div>
                 </label>
-                <button
-                    disabled={text?.trim().length === 0}
-                    className='text-white bg-blue-400 font-bold py-2 px-10 rounded-full cursor-pointer hover:brightness-90 disabled:brightness-125 duration-100'
-                >
-                    Post
-                </button>
+                {!isPending ?
+                    <button
+                        disabled={text?.trim().length === 0}
+                        className='text-white bg-blue-400 font-bold py-2 px-10 rounded-full cursor-pointer hover:brightness-90 disabled:brightness-125 duration-100'
+                    >
+                        Post
+                    </button>
+                :
+                    <p>Loading</p>
+                }
             </div>
         </form>
     )
