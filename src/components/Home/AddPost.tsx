@@ -11,7 +11,7 @@ export const AddPost: React.FC<PropsType> = async ({user}) => {
     const { user_metadata } = user;
 
     return (
-        <div className="p-2 w-full flex items-start space-x-2">
+        <div className="mb-2 p-2 w-full flex items-start space-x-2 border-b border-gray-300">
             <div className="w-10 h-10 rounded-full overflow-hidden">
                 <Image 
                     alt="Avatar url"

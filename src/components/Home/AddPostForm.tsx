@@ -19,30 +19,30 @@ export const AddPostForm: React.FC<PropsType> = ({user}) => {
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if(selectedFile) {
-            startTransition(async () => {
-                try {
-                    const data = new FormData(e.currentTarget);
+        startTransition(async () => {
+            try {
+                const data = new FormData(e.currentTarget);
 
-                    data.append('avatarUrl', user.user_metadata.avatar_url)
-                    data.append('username', user.user_metadata.name)
+                data.append('avatarUrl', user.user_metadata.avatar_url)
+                data.append('username', user.user_metadata.full_name)
+                if(selectedFile) {
                     data.append('imageFile', selectedFile)
-                    data.append('userId', user.user_metadata.user_id)
-                    
-                    const { errorMessage } = await sendPostAction(data);
-
-                    if(errorMessage) {
-                        throw new Error(errorMessage)
-                    }
-
-                    setSelectedImageUrl(null);
-                    setSelectedFile(null);
-                    setText('');
-                } catch(e) {
-                    console.log('something went wrong', e)
                 }
-            })
-        }
+                data.append('userId', user.id)
+                
+                const { errorMessage } = await sendPostAction(data);
+
+                if(errorMessage) {
+                    throw new Error(errorMessage)
+                }
+
+                setSelectedImageUrl(null);
+                setSelectedFile(null);
+                setText('');
+            } catch(e) {
+                console.log('something went wrong', e)
+            }
+        })
     }
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

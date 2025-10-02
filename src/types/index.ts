@@ -5,7 +5,7 @@ export type PostType = {
     created_at: string,
     username: string,
     avatar_url: string,
-    image_url: string,
+    image_url: string | null,
     text: string
 }
 

@@ -16,7 +16,7 @@ export const SignOutButton: React.FC<PropsType> = ({}) => {
             //TODO:
             //handle error  
             if ( errorMessage ) {
-                console.error('error message', errorMessage);
+                console.log('error message', errorMessage);
             }
         })
     }

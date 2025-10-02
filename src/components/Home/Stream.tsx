@@ -10,7 +10,7 @@ export const Stream: React.FC<PropsType> = async ({}) => {
     const supabase = await createClient();
     const res = await axiosInstance.get<ResponseType<PostType[]>>('/posts');
 
-    const posts = res.data
+    const posts = res.data;
 
     //TODO: handle error
     if(posts.errorMessage) {

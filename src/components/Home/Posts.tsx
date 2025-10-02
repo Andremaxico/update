@@ -3,6 +3,8 @@
 import { PostType } from "@/types"
 import { supabaseClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
+import { Post } from "./Post";
+import { RealtimePostgresInsertPayload } from "@supabase/supabase-js";
 
 type PropsType = {
     serverPosts: PostType[],
@@ -15,22 +17,28 @@ type PropsType = {
 export const Posts: React.FC<PropsType> = ({serverPosts}) => {
     const [posts, setPosts] = useState<PostType[]>(serverPosts);
 
+    console.log('current posts', posts);
+
     useEffect(() => {
-        const channel = supabaseClient
-            .channel('room1')
-            .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'countries' }, payload => {
-                console.log('Change received!', payload)
+        const myChannel = supabaseClient
+            .channel('posts')
+            .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'posts' }, payload => {
+                const newPost = payload.new as PostType;
+
+                setPosts((currentPosts) => [newPost, ...currentPosts]);
             })
             .subscribe()
 
-        
-
         return () => {
-            supabaseClient.removeChannel(channel)
+            supabaseClient.removeChannel(myChannel)
         }
-    }, [supabaseClient])
+    }, [])
 
     return (
-        <div>Posts</div>
+        <div className="flex flex-col space-y-2 px-2">
+            {posts.map(postData => (
+                <Post data={postData} key={postData.id} />
+            ))}
+        </div>
     )
 }

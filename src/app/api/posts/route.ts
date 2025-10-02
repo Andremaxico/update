@@ -23,7 +23,7 @@ export const POST = async ( req: NextRequest ): Promise<NextResponse<ResponseTyp
         .insert([
             { 
                 avatar_url: formData.get('avatarUrl'), 
-                image_url: formData.get('imageUrl'),
+                image_url: formData.get('imageUrl') ?? null,
                 username: formData.get('username'),
                 text: formData.get('postText'),
                 user_id: formData.get('userId')

@@ -9,7 +9,7 @@ export const Home = async () => {
 
     return (
         <div className="w-full max-w-2xl">
-            <div className="p-2 border-b-1 border-gray-500">
+            <div className="mb-2 p-2 border-b-1 border-gray-500">
                 <h2 className="text-lg font-bold">Home</h2>
             </div>
             {data.user && <AddPost user={data.user} />}
