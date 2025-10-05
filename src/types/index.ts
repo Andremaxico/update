@@ -6,6 +6,7 @@ export type PostType = {
     username: string,
     avatar_url: string,
     image_url: string | null,
+    likes: string[],
     text: string
 }
 
