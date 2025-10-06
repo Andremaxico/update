@@ -8,6 +8,8 @@ type PropsType = {}
 
 export const Stream: React.FC<PropsType> = async ({}) => {
     const supabase = await createClient();
+    
+    const { data: { user } } = await supabase.auth.getUser();
     const res = await axiosInstance.get<ResponseType<PostType[]>>('/posts');
 
     const posts = res.data;
@@ -20,7 +22,7 @@ export const Stream: React.FC<PropsType> = async ({}) => {
     return (
         <div>
             {posts.data && 
-                <Posts serverPosts={posts.data} />
+                <Posts serverPosts={posts.data} authUid={user?.id} />
             }
         </div>
     )

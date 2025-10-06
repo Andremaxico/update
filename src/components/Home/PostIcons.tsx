@@ -8,12 +8,13 @@ import { IoMdHeart } from 'react-icons/io';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
 
 type PropsType = {
+    authUid: string | undefined,
     postId: string,
     userId: string,
     likes: string[]
 };
 
-export const PostIcons: React.FC<PropsType> = ({ postId, userId, likes }) => {
+export const PostIcons: React.FC<PropsType> = ({ postId, userId, likes, authUid }) => {
     const [currLikes, setCurrLikes] = useState<string[]>(likes)
     const [isLiked, setIsLiked] = useState<boolean>(likes.includes(userId));
 
@@ -29,6 +30,22 @@ export const PostIcons: React.FC<PropsType> = ({ postId, userId, likes }) => {
             setCurrLikes(postData.likes);
         } else if(res.data.errorMessage) {
             console.log('error', res.data.errorMessage);
+        }
+    }
+
+    const handleDelete = async () => {
+        if(userId === authUid) {
+            const res = await axiosInstance.delete(`/posts/${postId}`);
+
+            const errorMessage = res.data;
+
+            if(errorMessage) {
+                //TODO: 
+                //handle error
+            } else {
+                //TODO:
+                //show success
+            }
         }
     }
 
@@ -54,9 +71,14 @@ export const PostIcons: React.FC<PropsType> = ({ postId, userId, likes }) => {
                     </p>
                 </div>
             </div>
-            <button className="group w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-red-50 hover:text-red-400 duration-75 rounded-full cursor-pointer">
-                <HiOutlineTrash className="size-5" />
-            </button>
+            { authUid === userId &&
+                <button 
+                    className="group w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-red-50 hover:text-red-400 duration-75 rounded-full cursor-pointer"
+                    onClick={handleDelete}
+                >
+                    <HiOutlineTrash className="size-5" />
+                </button>
+            }
         </div>
     )
 }

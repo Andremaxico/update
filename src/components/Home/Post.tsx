@@ -6,12 +6,15 @@ import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { HiOutlineTrash } from "react-icons/hi2";
 import { PostIcons } from "./PostIcons";
+import { createClient } from "@/utils/supabase/server";
 
 type PropsType = {
     data: PostType,
+    authUid: string | undefined,
 }
 
-export const Post: React.FC<PropsType> = ({data}) => {
+export const Post: React.FC<PropsType> = ({ data, authUid }) => {
+
     const { image_url, avatar_url, created_at, text, username, id, user_id, likes } = data
 
     //TODO;
@@ -59,7 +62,7 @@ export const Post: React.FC<PropsType> = ({data}) => {
                     />
                 </div>
             }
-            <PostIcons likes={likes} postId={id} userId={user_id} />
+            <PostIcons likes={likes} postId={id} userId={user_id} authUid={authUid} />
         </div>
     )
 }
