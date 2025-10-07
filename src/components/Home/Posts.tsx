@@ -4,7 +4,6 @@ import { PostType } from "@/types"
 import { supabaseClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
 import { Post } from "./Post";
-import { RealtimePostgresInsertPayload } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
 
 type PropsType = {
@@ -24,7 +23,7 @@ export const Posts: React.FC<PropsType> = ({ serverPosts, authUid }) => {
 
     useEffect(() => {
         const insertChannel = supabaseClient
-            .channel('posts_inser')
+            .channel('posts_insert')
             .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'posts' }, payload => {
                 const newPost = payload.new as PostType;
 
@@ -35,7 +34,8 @@ export const Posts: React.FC<PropsType> = ({ serverPosts, authUid }) => {
         const deleteChannel = supabaseClient
             .channel('posts_delete')
             .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'posts' }, payload => {
-                router.refresh()
+                console.log('got delete');
+                window.location.reload();
             })
             .subscribe()
 
