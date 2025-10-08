@@ -4,6 +4,8 @@ import "../globals.css";
 import { News } from "../../components/News/News";
 import { Sidebar } from "../../components/Sidebar/Sidebar";
 import { Search } from "../../components/Search/Search";
+import { RecoilRoot } from "recoil";
+import { AppWrapper } from "@/components/AppWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,7 +44,7 @@ export default async function RootLayout({
           <div className="hidden sm:block">
             <Sidebar />
           </div>
-          {children}
+          <AppWrapper children={children} />
           <div className="hidden md:block sticky right-0 top-0 pt-5 pl-2 border-l-1 border-gray-300 max-w-80">
             <div className="mb-2">
               <Search />

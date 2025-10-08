@@ -1,11 +1,13 @@
 'use client';
 
+import { commentPopupState } from '@/atom/commentPopupStateAtom';
 import { axiosInstance } from '@/utils/axiosInstance';
 import React, { useEffect, useState } from 'react'
 import { HiOutlineTrash } from 'react-icons/hi2';
 import { IoMdHeartEmpty } from 'react-icons/io';
 import { IoMdHeart } from 'react-icons/io';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
+import { useRecoilState } from 'recoil';
 
 type PropsType = {
     authUid: string | undefined,
@@ -15,6 +17,7 @@ type PropsType = {
 };
 
 export const PostIcons: React.FC<PropsType> = ({ postId, userId, likes, authUid }) => {
+    const [ isCommentPopupOpen, setIsCommentPopupOpen ] = useRecoilState(commentPopupState);
     const [currLikes, setCurrLikes] = useState<string[]>(likes)
     const [isLiked, setIsLiked] = useState<boolean>(likes.includes(userId));
 
@@ -49,10 +52,17 @@ export const PostIcons: React.FC<PropsType> = ({ postId, userId, likes, authUid 
         }
     }
 
+    const openCommentPopup = () => {
+        setIsCommentPopupOpen(true);
+    }
+
     return (
         <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-                <button className="group w-8 h-8 flex items-center justify-center hover:bg-blue-50 hover:text-blue-400 duration-75 rounded-full cursor-pointer">
+                <button 
+                    className="group w-8 h-8 flex items-center justify-center hover:bg-blue-50 hover:text-blue-400 duration-75 rounded-full cursor-pointer"
+                    onClick={openCommentPopup}
+                >
                     <IoChatbubbleEllipsesOutline className="size-5" />
                 </button>
                 <div className="flex items-center">

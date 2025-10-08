@@ -4,7 +4,6 @@ import { PostType } from "@/types"
 import { supabaseClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
 import { Post } from "./Post";
-import { useRouter } from "next/navigation";
 
 type PropsType = {
     serverPosts: PostType[],
@@ -16,7 +15,6 @@ type PropsType = {
 //but we need to unsubscribe from updates on UnMount
 
 export const Posts: React.FC<PropsType> = ({ serverPosts, authUid }) => {
-    const router = useRouter();
     const [posts, setPosts] = useState<PostType[]>(serverPosts);
 
     console.log('current posts', posts);
