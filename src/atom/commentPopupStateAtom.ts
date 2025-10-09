@@ -1,6 +1,4 @@
-import { atom } from "recoil";
+import { atom } from "@zedux/react";
 
-export const commentPopupState = atom<boolean>({
-    default: false,
-    key: 'commentPopupState'
-})
+
+export const commentPopupState = atom<boolean>('commentPopupState', false);

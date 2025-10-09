@@ -6,6 +6,7 @@ import { Posts } from "./Posts";
 import { createClient } from "@/utils/supabase/server";
 import { PostType, ResponseType } from "@/types";
 import { revalidatePath } from "next/cache";
+import { CommentPopup } from "./CommentPopup";
 
 type PropsType = {}
 
@@ -28,6 +29,7 @@ export const Stream: React.FC<PropsType> = async ({}) => {
             {posts.data && 
                 <Posts serverPosts={posts.data} authUid={user?.id} />
             }
+            <CommentPopup />
         </div>
     )
 }

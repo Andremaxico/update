@@ -2,6 +2,7 @@
 
 import { commentPopupState } from '@/atom/commentPopupStateAtom';
 import { axiosInstance } from '@/utils/axiosInstance';
+import { useAtomState } from '@zedux/react';
 import React, { useEffect, useState } from 'react'
 import { HiOutlineTrash } from 'react-icons/hi2';
 import { IoMdHeartEmpty } from 'react-icons/io';
@@ -17,7 +18,7 @@ type PropsType = {
 };
 
 export const PostIcons: React.FC<PropsType> = ({ postId, userId, likes, authUid }) => {
-    const [ isCommentPopupOpen, setIsCommentPopupOpen ] = useRecoilState(commentPopupState);
+    const [ isCommentPopupOpen, setIsCommentPopupOpen ] = useAtomState(commentPopupState);
     const [currLikes, setCurrLikes] = useState<string[]>(likes)
     const [isLiked, setIsLiked] = useState<boolean>(likes.includes(userId));
 
