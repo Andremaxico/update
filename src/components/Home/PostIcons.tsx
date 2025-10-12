@@ -1,8 +1,9 @@
 'use client';
 
-import { commentPopupState } from '@/atom/commentPopupStateAtom';
+import { commentPopupState, postIdState } from '@/atom/commentPopupStateAtom';
 import { axiosInstance } from '@/utils/axiosInstance';
 import { useAtomState } from '@zedux/react';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { HiOutlineTrash } from 'react-icons/hi2';
 import { IoMdHeartEmpty } from 'react-icons/io';
@@ -19,6 +20,10 @@ type PropsType = {
 
 export const PostIcons: React.FC<PropsType> = ({ postId, userId, likes, authUid }) => {
     const [ isCommentPopupOpen, setIsCommentPopupOpen ] = useAtomState(commentPopupState);
+    const [ postIdAtomState, setPostIdAtomState ] = useAtomState(postIdState);
+
+    const router = useRouter(); 
+
     const [currLikes, setCurrLikes] = useState<string[]>(likes)
     const [isLiked, setIsLiked] = useState<boolean>(likes.includes(userId));
 
@@ -54,7 +59,12 @@ export const PostIcons: React.FC<PropsType> = ({ postId, userId, likes, authUid 
     }
 
     const openCommentPopup = () => {
-        setIsCommentPopupOpen(true);
+        if(authUid) {
+            setIsCommentPopupOpen(true);
+            setPostIdAtomState(postId)
+        } else {
+            router.push('/signin')
+        }
     }
 
     return (

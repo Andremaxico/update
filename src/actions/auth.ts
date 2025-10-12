@@ -1,7 +1,8 @@
 'use server'
 
+import { supabaseClient } from "@/utils/supabase/client";
 import { createClient } from "@/utils/supabase/server"
-import { Provider } from "@supabase/supabase-js";
+import { Provider, User } from "@supabase/supabase-js";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -81,4 +82,15 @@ export async function signUpAction(formData: FormData) {
 
   revalidatePath('/', 'layout')
   redirect('/confirm-email')
+}
+
+export const getUserAction = async (): Promise<User | null> => {
+    const supabase = await createClient();
+
+    const data = await supabase.auth.getUser();
+    const user = data.data.user;
+
+    console.log('action data', data);
+
+    return user;
 }

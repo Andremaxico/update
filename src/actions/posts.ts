@@ -1,3 +1,4 @@
+import { PostType } from "@/types";
 import { axiosInstance } from "@/utils/axiosInstance";
 
 export const sendPostAction = async (formData: FormData) => {
@@ -13,4 +14,11 @@ export const sendPostAction = async (formData: FormData) => {
     const response = await axiosInstance.post('/posts', formData);
 
     return { errorMessage: response.data.errorMessage}
+}
+
+export const getPostAction = async (postId: string): Promise<PostType> => {
+    const res = await axiosInstance.get(`/posts/${postId}`);
+    const postData = res.data.data;
+
+    return postData;
 }
