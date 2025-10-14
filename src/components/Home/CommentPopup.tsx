@@ -5,7 +5,7 @@ import { useAtomState } from "@zedux/react"
 import ReactModal from "react-modal"
 import { useRecoilState } from "recoil"
 import { HiX } from "react-icons/hi";
-import { ChangeEvent, useEffect, useState, useTransition } from "react"
+import { ChangeEvent, useEffect, useRef, useState, useTransition } from "react"
 import { PostType } from "@/types"
 import { axiosInstance } from "@/utils/axiosInstance"
 import { getPostAction } from "@/actions/posts"
@@ -24,6 +24,9 @@ export const CommentPopup = ({}) => {
     const [avatarsDistance, setAvatarsDistance] = useState<number | undefined>(undefined);
     const [userData, setUserData] = useState<User | null>(null);
     const [commentText, setCommentText] = useState<string>('');
+
+    const originAvatarRef = useRef<HTMLDivElement>(null);
+    const commentAvatarRef = useRef<HTMLDivElement>(null);
 
     const closePopup = () => {
         setIsOpen(false);
@@ -50,6 +53,20 @@ export const CommentPopup = ({}) => {
         }
     }, [postId])
 
+    //set height of decoative line
+    useEffect(() => {
+        if(commentAvatarRef.current && originAvatarRef.current) {
+            const commentTop = commentAvatarRef.current.offsetTop;
+            const originTop = originAvatarRef.current.offsetTop;
+
+            console.log('avatar tops', commentTop, originTop);
+
+            setAvatarsDistance(commentTop-originTop);
+        }
+    }, [commentAvatarRef.current, originAvatarRef.current]);
+
+    console.log('avatars distance', avatarsDistance);
+
     return (
         <ReactModal 
             isOpen={isOpen}
@@ -69,13 +86,16 @@ export const CommentPopup = ({}) => {
                             <HiX className="size-5 text-gray-600" />
                         </button>
 
-                        <div className="flex flex-col pl-8">
+                        <div className="mb-2 flex flex-col pl-8">
                             <div className="flex mb-2">
-                                <div className={`
-                                    relative mr-2 w-12 h-12 flex items-center justify-center rounded-full overflow-hidden
-                                    before:content-[''] before:h-[${avatarsDistance || 40}px] before:w-[1px] before:bg-gray-500
-                                    before:left-1/2 before:translate-x-[-50%] before:top-[calc(100% - 1px)] before:z-[-1]
-                                `}>
+                                <div
+                                    ref={originAvatarRef} 
+                                    className={`
+                                        relative mr-2 w-12 h-12 flex items-center justify-center rounded-full overflow-hidden
+                                        before:content-[''] before:h-[${avatarsDistance || 40}px] before:w-[1px] before:bg-gray-500
+                                        before:left-1/2 before:translate-x-[-50%] before:top-[calc(100% - 1px)] before:z-[-1]
+                                        `}
+                                >
                                     <Image 
                                         alt="user_1_image"
                                         src={originPost.avatar_url ?? ''}
@@ -95,9 +115,12 @@ export const CommentPopup = ({}) => {
 
                         <div className="flex flex-col pl-8">
                             <div className="flex mb-2">
-                                <div className={`
-                                    relative mr-2 w-12 h-12 flex items-center justify-center rounded-full overflow-hidden
-                                `}>
+                                <div 
+                                    ref={commentAvatarRef}
+                                    className={`
+                                        relative mr-2 w-12 h-12 flex items-center justify-center rounded-full overflow-hidden
+                                    `}
+                                >
                                     <Image 
                                         alt="user_1_image"
                                         src={userData.user_metadata.avatar_url ?? ''}
@@ -110,23 +133,27 @@ export const CommentPopup = ({}) => {
                                     <p className="font-bold">{userData.user_metadata.name}</p>
                                 </div>
                             </div>
-                            <form>
-                                <div className="">
-                                    <textarea 
-                                        defaultValue={commentText}
+                            <form className="flex flex-col items-end pr-2 pb-2">
+                                <div className="w-full pl-14">
+                                    <textarea
                                         value={commentText}
+                                        rows={3}
                                         onChange={handleChange}
                                         placeholder="What do you think?"
                                         name="commentText"
                                         className="
-                                            text-sm text-gray-600
-                                            border-b-1 border-gray-600
-                                            placeholder:font-bold
+                                            w-full
+                                            text-sm
+                                            border-b-1 border-gray-300
+                                            resize-none outline-0
+                                            placeholder:font-bold focus:border-gray-600
+                                            duration-50
                                         "
                                     />
                                 </div>
                                 <button
-                                    className='text-white bg-blue-400 text-sm py-2 px-10 rounded-full cursor-pointer translate-x-4 hover:brightness-90 disabled:brightness-125 duration-100'
+                                    disabled={commentText.trim().length < 1}
+                                    className='text-white bg-blue-400 text-sm py-2 px-10 rounded-full cursor-pointer hover:brightness-90 disabled:brightness-125 duration-100'
                                 >
                                     Reply
                                 </button>
@@ -136,8 +163,6 @@ export const CommentPopup = ({}) => {
                 :
                     <>Error</>
                 }
-
-
             </div>
         </ReactModal>
     )
