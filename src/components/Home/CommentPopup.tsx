@@ -87,21 +87,29 @@ export const CommentPopup = ({}) => {
                         </button>
 
                         <div className="mb-2 flex flex-col pl-8">
-                            <div className="flex mb-2">
+                            <div className="relative flex mb-2">
                                 <div
                                     ref={originAvatarRef} 
                                     className={`
-                                        relative mr-2 w-12 h-12 flex items-center justify-center rounded-full overflow-hidden
-                                        before:content-[''] before:h-[${avatarsDistance || 40}px] before:w-[1px] before:bg-gray-500
-                                        before:left-1/2 before:translate-x-[-50%] before:top-[calc(100% - 1px)] before:z-[-1]
-                                        `}
+                                        mr-2 w-12 h-12 flex items-center justify-center rounded-full overflow-hidden
+                                    `}
                                 >
+                                    <span 
+                                        className=" 
+                                            absolute w-[1px] bg-gray-500
+                                            left-6 translate-x-[-50%] top-[100%]
+                                        "
+                                        style={{
+                                            height: avatarsDistance || 40 + 'px'
+                                        }}
+                                    >
+                                    </span>
                                     <Image 
                                         alt="user_1_image"
                                         src={originPost.avatar_url ?? ''}
                                         width={50}
                                         height={50}
-                                        className="w-full h-full object-cover"
+                                        className="relative w-full h-full object-cover z-2"
                                     />
                                 </div>
                                 <div className="">
@@ -126,7 +134,7 @@ export const CommentPopup = ({}) => {
                                         src={userData.user_metadata.avatar_url ?? ''}
                                         width={50}
                                         height={50}
-                                        className="w-full h-full object-cover"
+                                        className="relative w-full h-full object-cover z-2"
                                     />
                                 </div>
                                 <div className="">
