@@ -17,6 +17,9 @@ export const POST = async ( req: NextRequest ): Promise<NextResponse<ResponseTyp
         text: formData.get('postText') as string,
         user_id: formData.get('userId') as string,
         likes: [] as string[],
+        //TODO:
+        //handle it in some way
+        comments: [] as PostType[],
     }
 
     const { data, error } = await supabase

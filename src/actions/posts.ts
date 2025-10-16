@@ -1,4 +1,4 @@
-import { PostType } from "@/types";
+import { PostType, ResponseType } from "@/types";
 import { axiosInstance } from "@/utils/axiosInstance";
 
 export const sendPostAction = async (formData: FormData) => {
@@ -21,4 +21,18 @@ export const getPostAction = async (postId: string): Promise<PostType> => {
     const postData = res.data.data;
 
     return postData;
+}
+
+
+//TODO:
+//maybe return an added comment
+
+export const sendCommentAction = async (data: FormData): Promise<ResponseType<any>> => {
+    const postId = data.get('originPostId');
+
+    const res = await axiosInstance.post(`/posts/${postId}/comments`, data);
+
+    const resData = res.data;
+
+    return resData;
 }

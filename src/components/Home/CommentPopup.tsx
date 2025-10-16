@@ -5,8 +5,8 @@ import { useAtomState } from "@zedux/react"
 import ReactModal from "react-modal"
 import { useRecoilState } from "recoil"
 import { HiX } from "react-icons/hi";
-import { ChangeEvent, useEffect, useRef, useState, useTransition } from "react"
-import { PostType } from "@/types"
+import { ChangeEvent, FormEvent, useEffect, useRef, useState, useTransition } from "react"
+import { CommentType, PostType } from "@/types"
 import { axiosInstance } from "@/utils/axiosInstance"
 import { getPostAction } from "@/actions/posts"
 import Image from "next/image"
@@ -36,6 +36,32 @@ export const CommentPopup = ({}) => {
         const value = e.target.value;
 
         setCommentText(value);
+    }
+
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        //TODO:
+        //implement adding images
+        if(userData) {
+            startTransition(async () => {
+                const formData = new FormData();
+
+                const data: Omit<CommentType, 'created_at' | 'id' | 'comments' | 'likes' | 'image_url'>= {
+                    avatar_url: userData?.user_metadata.avatar_url,
+                    text: commentText,
+                    user_id: userData?.id,
+                    username: userData.user_metadata.name,
+                    originPostId: postId,
+                }  
+
+                const dataEntries = Object.entries(data);
+
+                for(let i = 0; i < dataEntries.length; i++) {
+                    const [name, value] = dataEntries[i];
+
+                    formData.append(name, value)
+                }
+            })
+        }
     }
 
     //get user and post data because it is necessary to show add post ui
@@ -141,7 +167,10 @@ export const CommentPopup = ({}) => {
                                     <p className="font-bold">{userData.user_metadata.name}</p>
                                 </div>
                             </div>
-                            <form className="flex flex-col items-end pr-2 pb-2">
+                            <form 
+                                className="flex flex-col items-end pr-2 pb-2"
+                                onSubmit={handleSubmit}
+                            >
                                 <div className="w-full pl-14">
                                     <textarea
                                         value={commentText}
@@ -161,6 +190,7 @@ export const CommentPopup = ({}) => {
                                 </div>
                                 <button
                                     disabled={commentText.trim().length < 1}
+                                    type="submit"
                                     className='text-white bg-blue-400 text-sm py-2 px-10 rounded-full cursor-pointer hover:brightness-90 disabled:brightness-125 duration-100'
                                 >
                                     Reply

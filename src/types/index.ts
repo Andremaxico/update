@@ -1,3 +1,4 @@
+export type CommentType = PostType & { originPostId: string }
 
 export type PostType = {
     user_id: string,
@@ -7,6 +8,7 @@ export type PostType = {
     avatar_url: string,
     image_url: string | null,
     likes: string[],
+    comments: PostType[],
     text: string
 }
 
