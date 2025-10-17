@@ -23,12 +23,12 @@ export const AddPostForm: React.FC<PropsType> = ({user}) => {
             try {
                 const data = new FormData(e.currentTarget);
 
-                data.append('avatarUrl', user.user_metadata.avatar_url)
+                data.append('avatar_url', user.user_metadata.avatar_url)
                 data.append('username', user.user_metadata.full_name)
                 if(selectedFile) {
                     data.append('imageFile', selectedFile)
                 }
-                data.append('userId', user.id)
+                data.append('user_id', user.id)
                 
                 const { errorMessage } = await sendPostAction(data);
 

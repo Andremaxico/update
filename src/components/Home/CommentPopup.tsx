@@ -6,9 +6,9 @@ import ReactModal from "react-modal"
 import { useRecoilState } from "recoil"
 import { HiX } from "react-icons/hi";
 import { ChangeEvent, FormEvent, useEffect, useRef, useState, useTransition } from "react"
-import { CommentType, PostType } from "@/types"
+import { FormPostType, PostType } from "@/types"
 import { axiosInstance } from "@/utils/axiosInstance"
-import { getPostAction } from "@/actions/posts"
+import { getPostAction, sendCommentAction } from "@/actions/posts"
 import Image from "next/image"
 import { supabaseClient } from "@/utils/supabase/client"
 import { User } from "@supabase/supabase-js"
@@ -39,18 +39,21 @@ export const CommentPopup = ({}) => {
     }
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         //TODO:
         //implement adding images
-        if(userData) {
+        if(userData && originPost) {
             startTransition(async () => {
                 const formData = new FormData();
 
-                const data: Omit<CommentType, 'created_at' | 'id' | 'comments' | 'likes' | 'image_url'>= {
-                    avatar_url: userData?.user_metadata.avatar_url,
+                console.log('user data', userData, userData.user_metadata.avatar_url, userData.id)
+
+                const data: FormPostType = {
+                    avatar_url: userData.user_metadata.avatar_url,
                     text: commentText,
-                    user_id: userData?.id,
-                    username: userData.user_metadata.name,
-                    originPostId: postId,
+                    user_id: userData.id,
+                    username: userData.user_metadata.full_name,
+                    commentOf: postId,
                 }  
 
                 const dataEntries = Object.entries(data);
@@ -58,8 +61,12 @@ export const CommentPopup = ({}) => {
                 for(let i = 0; i < dataEntries.length; i++) {
                     const [name, value] = dataEntries[i];
 
-                    formData.append(name, value)
+                    formData.append(name, value === null ? '' : value)
                 }
+
+                const response = await sendCommentAction(formData, originPost.commentsCount)
+
+                setCommentText('');
             })
         }
     }
@@ -81,9 +88,10 @@ export const CommentPopup = ({}) => {
 
     //set height of decoative line
     useEffect(() => {
+        console.log(commentAvatarRef.current, originAvatarRef.current)
         if(commentAvatarRef.current && originAvatarRef.current) {
-            const commentTop = commentAvatarRef.current.offsetTop;
-            const originTop = originAvatarRef.current.offsetTop;
+            const commentTop = commentAvatarRef.current.getBoundingClientRect().y;
+            const originTop = originAvatarRef.current.getBoundingClientRect().y;
 
             console.log('avatar tops', commentTop, originTop);
 
@@ -126,7 +134,7 @@ export const CommentPopup = ({}) => {
                                             left-6 translate-x-[-50%] top-[100%]
                                         "
                                         style={{
-                                            height: avatarsDistance || 40 + 'px'
+                                            height: avatarsDistance || 0 + 'px'
                                         }}
                                     >
                                     </span>
@@ -189,11 +197,11 @@ export const CommentPopup = ({}) => {
                                     />
                                 </div>
                                 <button
-                                    disabled={commentText.trim().length < 1}
+                                    disabled={commentText.trim().length < 1 || isPending}
                                     type="submit"
-                                    className='text-white bg-blue-400 text-sm py-2 px-10 rounded-full cursor-pointer hover:brightness-90 disabled:brightness-125 duration-100'
+                                    className='text-white bg-blue-400 text-sm py-2 px-10 rounded-full cursor-pointer hover:brightness-90 disabled:opacity-50 duration-100'
                                 >
-                                    Reply
+                                    {isPending ? 'Loading' : 'Reply'}
                                 </button>
                             </form>
                         </div>

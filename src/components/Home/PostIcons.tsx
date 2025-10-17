@@ -15,10 +15,11 @@ type PropsType = {
     authUid: string | undefined,
     postId: string,
     userId: string,
-    likes: string[]
+    likes: string[],
+    commentsCount: number,
 };
 
-export const PostIcons: React.FC<PropsType> = ({ postId, userId, likes, authUid }) => {
+export const PostIcons: React.FC<PropsType> = ({ postId, userId, likes, authUid, commentsCount }) => {
     const [ isCommentPopupOpen, setIsCommentPopupOpen ] = useAtomState(commentPopupState);
     const [ postIdAtomState, setPostIdAtomState ] = useAtomState(postIdState);
 
@@ -70,12 +71,17 @@ export const PostIcons: React.FC<PropsType> = ({ postId, userId, likes, authUid 
     return (
         <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-                <button 
-                    className="group w-8 h-8 flex items-center justify-center hover:bg-blue-50 hover:text-blue-400 duration-75 rounded-full cursor-pointer"
-                    onClick={openCommentPopup}
-                >
-                    <IoChatbubbleEllipsesOutline className="size-5" />
-                </button>
+                <div className="flex items-center group">
+                    <button 
+                        className="w-8 h-8 flex items-center justify-center hover:bg-blue-50 hover:text-blue-400 duration-75 rounded-full cursor-pointer"
+                        onClick={openCommentPopup}
+                    >
+                        <IoChatbubbleEllipsesOutline className={`size-5`} />
+                    </button>
+                    {commentsCount > 0 &&
+                        <p className=''>{commentsCount}</p>
+                    }
+                </div>
                 <div className="flex items-center">
                     <button 
                         className="group w-8 h-8 flex items-center justify-center hover:bg-red-50 hover:text-red-400 duration-75 rounded-full cursor-pointer"

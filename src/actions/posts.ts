@@ -8,7 +8,7 @@ export const sendPostAction = async (formData: FormData) => {
         const res = await axiosInstance.post('/storage/postsImages', formData);
         const image = res.data;
 
-        formData.append('imageUrl', image.data.publicUrl);
+        formData.append('image_url', image.data.publicUrl);
     }
 
     const response = await axiosInstance.post('/posts', formData);
@@ -27,10 +27,12 @@ export const getPostAction = async (postId: string): Promise<PostType> => {
 //TODO:
 //maybe return an added comment
 
-export const sendCommentAction = async (data: FormData): Promise<ResponseType<any>> => {
-    const postId = data.get('originPostId');
+export const sendCommentAction = async (data: FormData, originPostCommentsCount: number): Promise<ResponseType<any>> => {
+    const postId = data.get('commentOf');
 
-    const res = await axiosInstance.post(`/posts/${postId}/comments`, data);
+    await axiosInstance.put(`/posts/${postId}/comments`, { currCommentsCount: originPostCommentsCount });
+
+    const res = await axiosInstance.post(`/posts`, data);
 
     const resData = res.data;
 

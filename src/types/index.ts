@@ -1,4 +1,4 @@
-export type CommentType = PostType & { originPostId: string }
+export type FormPostType = Omit<PostType, 'created_at' | 'id' | 'comments' | 'likes' | 'image_url' | 'commentsCount'>
 
 export type PostType = {
     user_id: string,
@@ -9,6 +9,8 @@ export type PostType = {
     image_url: string | null,
     likes: string[],
     comments: PostType[],
+    commentOf: string | null,
+    commentsCount: number,
     text: string
 }
 

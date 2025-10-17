@@ -28,10 +28,19 @@ export const GET = async (req: NextRequest, { params }: { params: { postId: stri
         .select('*')
         .eq('id', postId)
 
-    if(error || posts.length > 1) {
+    const { data: comments, error: commentsError } = await supabase
+        .from('posts')
+        .select('*')
+        .eq('id', postId)
+
+    if(error || commentsError || posts.length > 1) {
         return NextResponse.json({ data: null, errorMessage: error ? error.message : 'Server error', status: 500 });
     } else {
-        return NextResponse.json({ data: posts[0], errorMessage: null, status: 204 });
+        const postData: PostType = {
+            ...posts[0],
+            comments,
+        }
+        return NextResponse.json({ data: postData, errorMessage: null, status: 204 });
     }
 
 }

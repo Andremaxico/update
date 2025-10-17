@@ -10,16 +10,17 @@ export const POST = async ( req: NextRequest ): Promise<NextResponse<ResponseTyp
 
     const formData = await req.formData();
 
-    const postData: Omit<PostType, 'created_at' | 'id'> = {
-        avatar_url: formData.get('avatarUrl') as string, 
-        image_url: (formData.get('imageUrl') || null) as string | null,
+    const postData: Omit<PostType, 'created_at' | 'id' | 'comments'> = {
+        avatar_url: formData.get('avatar_url') as string, 
+        image_url: (formData.get('image_url') || null) as string | null,
         username: formData.get('username') as string,
         text: formData.get('postText') as string,
-        user_id: formData.get('userId') as string,
+        user_id: formData.get('user_id') as string,
+        commentOf: formData.get('commentOf') as string | null,
         likes: [] as string[],
+        commentsCount: 0,
         //TODO:
         //handle it in some way
-        comments: [] as PostType[],
     }
 
     const { data, error } = await supabase
@@ -52,7 +53,7 @@ export const GET = async (req: NextRequest): Promise<NextResponse<ResponseType<D
     if(error) {
         return NextResponse.json({data: null, status: 500, errorMessage: error.message})
     } else {
-        const postsData = posts as DataType[]
+        const postsData = posts.filter(post => post.commentOf === null) as DataType[]
 
         return NextResponse.json({data: postsData, status: 200, errorMessage: null})
     }

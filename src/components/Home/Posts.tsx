@@ -24,8 +24,10 @@ export const Posts: React.FC<PropsType> = ({ serverPosts, authUid }) => {
             .channel('posts_insert')
             .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'posts' }, payload => {
                 const newPost = payload.new as PostType;
-
-                setPosts((currentPosts) => [newPost, ...currentPosts]);
+                
+                if(newPost.commentOf === null) {
+                    setPosts((currentPosts) => [newPost, ...currentPosts]);
+                }
             })
             .subscribe()
 

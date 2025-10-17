@@ -1,20 +1,25 @@
 import { ResponseType } from "@/types";
+import { createClient } from "@/utils/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
-export const POST = async (req: NextRequest, { params }: { params: { postId: string } }): Promise<NextResponse<ResponseType<any>>> => {
-    const data = req.formData;
+export const PUT = async (req: NextRequest, { params }: { params: { postId: string } }): Promise<NextResponse<ResponseType<any>>> => {
+    const supabase = await createClient();
 
-    //TODO:
-    //load data
+    const postId = (await params).postId;
 
-    const error = {
-        errorMessage: 'message',
-    };
+    const body = await req.json()
 
+    const currCommentsCount = body.currCommentsCount;
+
+    const { error } = await supabase
+        .from('posts')
+        .update({ commentsCount: currCommentsCount + 1 })
+        .eq('id', postId)
+        .select()
 
     if(error) {
-        return NextResponse.json({ data: null, errorMessage: error.errorMessage, status: 500 })
+        return NextResponse.json({ data: null, errorMessage: error.message, status: 500 })
     } else {
-        return NextResponse.json({ data: {}, errorMessage: null, status: 201 })
+        return NextResponse.json({data: null, errorMessage: null, status: 201})
     }
 }

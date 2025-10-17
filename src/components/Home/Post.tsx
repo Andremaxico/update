@@ -15,7 +15,7 @@ type PropsType = {
 
 export const Post: React.FC<PropsType> = ({ data, authUid }) => {
 
-    const { image_url, avatar_url, created_at, text, username, id, user_id, likes } = data
+    const { image_url, avatar_url, created_at, text, username, id, user_id, likes, commentsCount } = data
 
     //TODO;
     //show post date
@@ -28,13 +28,16 @@ export const Post: React.FC<PropsType> = ({ data, authUid }) => {
             <div className="flex items-center justify-between mb-1">
                 <div className="flex items-center space-x-2 pl-2">
                     <div className="w-12 h-12 rounded-full overflow-hidden">
-                        <Image
-                            width={60}
-                            height={60}
-                            alt="user_avatar"
-                            src={avatar_url}
-                            className="w-full h-full object-cover"
-                        />
+                        {avatar_url &&
+                            <Image
+                                width={60}
+                                height={60}
+                                alt="user_avatar"
+                                src={avatar_url}
+                                className="w-full h-full object-cover"
+                            />
+                        }
+                        {/* TODO: show something if there is not an avatar url */}
                     </div>
                     <div className="">
                         <p className="text-lg font-bold">
@@ -62,7 +65,7 @@ export const Post: React.FC<PropsType> = ({ data, authUid }) => {
                     />
                 </div>
             }
-            <PostIcons likes={likes} postId={id} userId={user_id} authUid={authUid} />
+            <PostIcons commentsCount={commentsCount} likes={likes} postId={id} userId={user_id} authUid={authUid} />
         </div>
     )
 }
