@@ -3,7 +3,7 @@
 import { PostType } from "@/types"
 import { supabaseClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
-import { Post } from "./Post";
+import { Post } from "../Post/Post";
 
 type PropsType = {
     serverPosts: PostType[],

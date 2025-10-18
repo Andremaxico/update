@@ -1,7 +1,7 @@
 'use server'
 
 import { axiosInstance } from "@/utils/axiosInstance";
-import { Post } from "./Post";
+import { Post } from "../Post/Post";
 import { Posts } from "./Posts";
 import { createClient } from "@/utils/supabase/server";
 import { PostType, ResponseType } from "@/types";

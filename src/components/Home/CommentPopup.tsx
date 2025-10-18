@@ -66,7 +66,13 @@ export const CommentPopup = ({}) => {
 
                 const response = await sendCommentAction(formData, originPost.commentsCount)
 
-                setCommentText('');
+                if(response.status < 300) {
+                    setCommentText('');
+                    closePopup();
+                }
+
+                //TODO:
+                //update comments number irt
             })
         }
     }
