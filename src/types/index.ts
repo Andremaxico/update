@@ -8,7 +8,6 @@ export type PostType = {
     avatar_url: string,
     image_url: string | null,
     likes: string[],
-    comments: PostType[],
     commentOf: string | null,
     commentsCount: number,
     text: string

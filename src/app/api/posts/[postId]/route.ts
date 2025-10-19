@@ -1,4 +1,5 @@
 import { PostType, ResponseType } from "@/types";
+import { axiosInstance } from "@/utils/axiosInstance";
 import { createClient } from "@/utils/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -28,19 +29,10 @@ export const GET = async (req: NextRequest, { params }: { params: { postId: stri
         .select('*')
         .eq('id', postId)
 
-    const { data: comments, error: commentsError } = await supabase
-        .from('posts')
-        .select('*')
-        .eq('id', postId)
-
-    if(error || commentsError || posts.length > 1) {
+    if(error || posts.length > 1) {
         return NextResponse.json({ data: null, errorMessage: error ? error.message : 'Server error', status: 500 });
     } else {
-        const postData: PostType = {
-            ...posts[0],
-            comments,
-        }
-        return NextResponse.json({ data: postData, errorMessage: null, status: 204 });
+        return NextResponse.json({ data: posts[0], errorMessage: null, status: 204 });
     }
 
 }
