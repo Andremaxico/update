@@ -2,11 +2,12 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({
+  const supabaseResponse = NextResponse.next({
     request,
   })
 
   //TODO: deal with protected routes
+  // const data = await supabaseResponse.json();
 
   return await updateSession(request, supabaseResponse)
 }

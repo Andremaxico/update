@@ -6,6 +6,7 @@ import { Sidebar } from "../../components/Sidebar/Sidebar";
 import { Search } from "../../components/Search/Search";
 import { RecoilRoot } from "recoil";
 import { AppWrapper } from "@/components/AppWrapper";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -53,6 +54,13 @@ export default async function RootLayout({
               <News />
             </div>
           </div>
+          <Toaster 
+            toastOptions={{
+              style: {
+                textAlign: 'center'
+              }
+            }}
+          />
         </AppWrapper>
       </body>
     </html>
