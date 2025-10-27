@@ -13,6 +13,8 @@ import Image from "next/image"
 import { supabaseClient } from "@/utils/supabase/client"
 import { User } from "@supabase/supabase-js"
 import { getUserAction } from "@/actions/auth"
+import { Error } from "@/UI/Error"
+import { Loader } from "@/UI/Loader"
 
 export const CommentPopup = ({}) => {
     const [ isPending, startTransition ] = useTransition();
@@ -116,7 +118,7 @@ export const CommentPopup = ({}) => {
         >
             <div className="p-2 bg-white rounded-md shadow-md">
                 {isPending ? 
-                    <p>loading</p>
+                    <Loader />
                 : originPost && userData ?
                     <>
                         <button 
@@ -213,7 +215,7 @@ export const CommentPopup = ({}) => {
                         </div>
                     </>   
                 :
-                    <>Error</>
+                    <Error />
                 }
             </div>
         </ReactModal>

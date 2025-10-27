@@ -54,13 +54,6 @@ export default async function RootLayout({
               <News />
             </div>
           </div>
-          <Toaster 
-            toastOptions={{
-              style: {
-                textAlign: 'center'
-              }
-            }}
-          />
         </AppWrapper>
       </body>
     </html>

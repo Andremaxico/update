@@ -5,7 +5,7 @@ import { PostPageHeader } from "@/components/Post/PostPageHeader";
 import { PostType, ResponseType } from "@/types";
 import { axiosInstance } from "@/utils/axiosInstance";
 import { createClient } from "@/utils/supabase/server";
-import toast from "react-hot-toast";
+import { toast, ToastContainer } from "react-toastify";
 
 export default async function PostPage({ params }: { params: { postId: string } }) {
     const supabase = await createClient();
@@ -39,6 +39,7 @@ export default async function PostPage({ params }: { params: { postId: string } 
                     <CommentPopup /> 
                 </>
             }
+            <ToastContainer />
         </section>
     )
 }
