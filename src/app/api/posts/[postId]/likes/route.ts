@@ -41,6 +41,6 @@ export const PUT = async ( req: NextRequest, { params }: { params: {postId: stri
     } else {
         const postData = data[0] as unknown as PostType
 
-        return NextResponse.json({data: postData, errorMessage: '', status: 201})
+        return NextResponse.json({data: postData, errorMessage: null, status: 201})
     }
 }

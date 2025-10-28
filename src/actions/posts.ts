@@ -1,7 +1,11 @@
 import { PostType, ResponseType } from "@/types";
 import { axiosInstance } from "@/utils/axiosInstance";
 
-export const sendPostAction = async (formData: FormData) => {
+type ErrorMessage = {
+    errorMessage: string | null,
+}
+
+export const sendPostAction = async (formData: FormData): Promise<ErrorMessage> => {
     const imageFile = formData.get('imageFile');
     
     if(imageFile) {
@@ -37,4 +41,12 @@ export const sendCommentAction = async (data: FormData, originPostCommentsCount:
     const resData = res.data;
 
     return resData;
+}
+
+export const toggleLikeAction = async (postId: string, userId: string, likeStatus: boolean, currLikes: string[]): Promise<ErrorMessage> => {
+    const res = await axiosInstance.put(`/posts/${postId}/likes?userId=${userId}&isLiked=${likeStatus}`, { currLikes })
+
+    console.log(res.data);
+
+    return { errorMessage: res.data.errorMessage }
 }

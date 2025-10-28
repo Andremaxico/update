@@ -21,7 +21,7 @@ export const Post: React.FC<PropsType> = ({ data, authUid }) => {
     //show post date
     const date = new Date(created_at.slice(10));
 
-    // console.log('date', date);
+    console.log('diffennt data', likes);
 
     return (
         <div className="pb-2 border-b border-gray-300">

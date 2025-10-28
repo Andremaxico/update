@@ -1,14 +1,16 @@
 'use client';
 
+import { toggleLikeAction } from '@/actions/posts';
 import { commentPopupState, postIdState } from '@/atom/commentPopupStateAtom';
 import { axiosInstance } from '@/utils/axiosInstance';
 import { useAtomState } from '@zedux/react';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useTransition } from 'react'
 import { HiOutlineTrash } from 'react-icons/hi2';
 import { IoMdHeartEmpty } from 'react-icons/io';
 import { IoMdHeart } from 'react-icons/io';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
+import { toast, ToastContainer } from 'react-toastify';
 import { useRecoilState } from 'recoil';
 
 type PropsType = {
@@ -20,27 +22,43 @@ type PropsType = {
 };
 
 export const PostIcons: React.FC<PropsType> = ({ postId, userId, likes, authUid, commentsCount }) => {
+    const [isPending, startTransition] = useTransition();
+
     const [ isCommentPopupOpen, setIsCommentPopupOpen ] = useAtomState(commentPopupState);
     const [ postIdAtomState, setPostIdAtomState ] = useAtomState(postIdState);
 
     const router = useRouter(); 
 
-    const [currLikes, setCurrLikes] = useState<string[]>(likes)
+    const [currLikes, setCurrLikes] = useState<string[]>([...likes])
     const [isLiked, setIsLiked] = useState<boolean>(likes.includes(userId));
 
+    console.log('is liked', isLiked, currLikes, likes)
+
+
     const handleLike = async () => {
-        const res = await axiosInstance.put(`/posts/${postId}/likes?userId=${userId}&isLiked=${isLiked}`, { currLikes })
-        
-        console.log('response', res.data);
+        //we do this shit to show user his like/unlike immediately
+        const oldLikedStatus = isLiked;
 
-        const postData = res.data.data;
+        const newCurrLikes = isLiked ? currLikes.filter(id => id !== userId) : [...currLikes, userId];
+        setCurrLikes(newCurrLikes)
+        setIsLiked(!oldLikedStatus)
 
-        if(res.status >= 200 && res.status <= 300) {
-            setIsLiked(postData.likes.includes(userId));
-            setCurrLikes(postData.likes);
-        } else if(res.data.errorMessage) {
-            console.log('error', res.data.errorMessage);
-        }
+        console.log('likes changed');
+
+        startTransition(async () => {
+            const errorMessage = await toggleLikeAction(postId, userId, oldLikedStatus, currLikes);
+
+            console.log('error message', errorMessage)
+
+            //dont know why, but if no errorMessage likes return to the start status
+            //I believe it's because of defaultValues in useStates
+            if(!errorMessage) {
+                setCurrLikes(newCurrLikes);
+                setIsLiked(!oldLikedStatus);
+            } else {
+                toast.error('Could not execute');
+            }
+        })
     }
 
     const handleDelete = async () => {
@@ -86,6 +104,7 @@ export const PostIcons: React.FC<PropsType> = ({ postId, userId, likes, authUid,
                     <button 
                         className="group w-8 h-8 flex items-center justify-center hover:bg-red-50 hover:text-red-400 duration-75 rounded-full cursor-pointer"
                         onClick={handleLike}
+                        disabled={isPending}
                     >
                         {isLiked ? 
                             <IoMdHeart className="text-red-400 size-5" />
