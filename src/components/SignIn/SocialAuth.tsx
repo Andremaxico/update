@@ -9,7 +9,7 @@ import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { authWithOAuthAction } from "@/actions/auth";
 
-type PropsType = {};
+type PropsType = object;
 
 export const SocialAuth: React.FC<PropsType> = ({}) => {
     const router = useRouter();

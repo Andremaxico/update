@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react'
 
-type PropsType = {};
+type PropsType = object;
 
 export const LoginButton: React.FC<PropsType> = ({}) => {
     return (

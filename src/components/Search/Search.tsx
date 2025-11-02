@@ -2,7 +2,7 @@ import React from 'react'
 import { CiSearch } from 'react-icons/ci'
 import { IoSearchCircle } from 'react-icons/io5'
 
-type PropsType = {}
+type PropsType = object
 
 export const Search: React.FC<PropsType> = ({}) => {
     return (

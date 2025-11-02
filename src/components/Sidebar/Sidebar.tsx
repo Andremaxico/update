@@ -7,7 +7,7 @@ import { Navigation } from './Navigation';
 import { createClient } from '@/utils/supabase/server';
 import { LoginButton } from './LoginButton';
 
-type PropsType = {}
+type PropsType = object
 
 export const Sidebar: React.FC<PropsType> = async ({}) => {
     const supabase = await createClient();

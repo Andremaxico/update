@@ -8,7 +8,7 @@ import { PostType, ResponseType } from "@/types";
 import { revalidatePath } from "next/cache";
 import { CommentPopup } from "./CommentPopup";
 
-type PropsType = {}
+type PropsType = object
 
 export const Stream: React.FC<PropsType> = async ({}) => {
     const supabase = await createClient();

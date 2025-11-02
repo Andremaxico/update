@@ -31,7 +31,7 @@ export const getPostAction = async (postId: string): Promise<PostType> => {
 //TODO:
 //maybe return an added comment
 
-export const sendCommentAction = async (data: FormData, originPostCommentsCount: number): Promise<ResponseType<any>> => {
+export const sendCommentAction = async (data: FormData, originPostCommentsCount: number): Promise<ResponseType<PostType>> => {
     const postId = data.get('commentOf');
 
     await axiosInstance.put(`/posts/${postId}/comments`, { currCommentsCount: originPostCommentsCount });

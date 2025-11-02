@@ -2,7 +2,7 @@ import { PostType, ResponseType } from "@/types";
 import { createClient } from "@/utils/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
-export const PUT = async (req: NextRequest, { params }: { params: { postId: string } }): Promise<NextResponse<ResponseType<any>>> => {
+export const PUT = async (req: NextRequest, { params }: { params: { postId: string } }): Promise<NextResponse<ResponseType<null>>> => {
     const supabase = await createClient();
 
     const postId = (await params).postId;

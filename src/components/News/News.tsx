@@ -3,7 +3,7 @@ import React from 'react'
 import { NewsService } from './NewsService';
 import axios from 'axios';
 
-type PropsType = {}
+type PropsType = object
 
 export const News: React.FC<PropsType> = async ({}) => {
     const response = await fetch('http://localhost:3000/api/news');

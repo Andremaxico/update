@@ -2,7 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 import { IoHome } from 'react-icons/io5'
 
-type PropsType = {}
+type PropsType = object
 
 export const Navigation: React.FC<PropsType> = ({}) => {
     return (

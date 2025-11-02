@@ -4,7 +4,7 @@ import { signOutAction } from "@/actions/auth";
 import { useTransition } from "react"
 
 
-type PropsType = {}
+type PropsType = object
 
 export const SignOutButton: React.FC<PropsType> = ({}) => {
     const [isPending, startTransition] = useTransition();

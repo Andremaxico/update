@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa";
 
-type PropsType = {};
+type PropsType = object;
 
 export const PostPageHeader: React.FC<PropsType> = ({}) => {
     return (
