@@ -69,7 +69,7 @@ export async function signUpAction(formData: FormData) {
     email: formData.get('email') as string,
     password: formData.get('password') as string,
     options: {
-        emailRedirectTo: 'http://localhost:3000'
+        emailRedirectTo: process.env.NEXT_PUBLIC_BASE_URL,
     }
   }
 
