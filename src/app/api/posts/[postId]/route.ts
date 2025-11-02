@@ -3,7 +3,7 @@ import { axiosInstance } from "@/utils/axiosInstance";
 import { createClient } from "@/utils/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
-export const DELETE = async (req: NextRequest, { params }: { params: { postId: string } }): Promise<NextResponse<ResponseType<null>>> => {
+export const DELETE = async (req: NextRequest, { params }: { params: Promise<{ postId: string }> }): Promise<NextResponse<ResponseType<null>>> => {
     const supabase = await createClient();
     const postId = (await params).postId
 
@@ -19,7 +19,7 @@ export const DELETE = async (req: NextRequest, { params }: { params: { postId: s
     }
 }
 
-export const GET = async (req: NextRequest, { params }: { params: { postId: string }}): Promise<NextResponse<ResponseType<PostType>>> => {
+export const GET = async (req: NextRequest, { params }: { params: Promise<{ postId: string }>}): Promise<NextResponse<ResponseType<PostType>>> => {
     const supabase = await createClient();
 
     const postId = (await params).postId;

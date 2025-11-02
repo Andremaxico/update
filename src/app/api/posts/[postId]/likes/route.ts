@@ -5,12 +5,12 @@ import { NextRequest, NextResponse } from "next/server";
 //we cannot provide required params in DELETE method
 //so we handle toggling likes in PUT method
 
-export const PUT = async ( req: NextRequest, { params }: { params: {postId: string} }): Promise<NextResponse<ResponseType<PostType>>> => {
+export const PUT = async (req: NextRequest, { params }: { params: Promise<{ postId: string }> }): Promise<NextResponse<ResponseType<PostType>>> => {
     const supabase = await createClient();
 
     const userId = req.nextUrl.searchParams.get('userId');
     const isLiked = req.nextUrl.searchParams.get('isLiked')
-    const postId = params.postId;
+    const postId = (await params).postId;
 
     console.log('is liked', isLiked, 'postId', postId, 'userid')
 
